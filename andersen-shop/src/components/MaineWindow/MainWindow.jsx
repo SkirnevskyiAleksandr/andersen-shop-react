@@ -5,14 +5,23 @@ import { Routes, Route, NavLink } from 'react-router-dom'
 import { AboutUs } from '../About_us/AboutUs'
 import Basket from '../../assets/basket.svg'
 import { Item } from '../Item/Item'
+import { ErrorPage } from '../ErrorPage/ErrorPage'
 
-let productCounter = 0;
-let itemsSum = 0;
 
-export const MainWindow = ({ listItem, reTurnItem, currentItem }) => {
+const basketItemsSum = (arr) => {
+    let counter = 0;
+
+    arr.map((item) => {
+        counter += item.price;
+    })
+
+    return counter;
+};
+
+export const MainWindow = ({ listItem, currentItem, reTurnItem, returnBasketListItems, currentBasketListItems, increaseCounter, decreaseCounter, counter }) => {
     return (
         <>
-            <header>
+            <header >
                 <div className={mainWindowStyles.online_shop}>online shop</div>
                 <nav className={mainWindowStyles.online_shop_nav}>
                     <NavLink to='/'>HOME</NavLink>
@@ -24,14 +33,34 @@ export const MainWindow = ({ listItem, reTurnItem, currentItem }) => {
                     <button className={mainWindowStyles.basketWrapper}>
                         <img src={Basket} alt="basket" />
                     </button>
-                    <div className={mainWindowStyles.items} mainWindowStyles>items:{productCounter}/sum:{itemsSum} </div>
+                    <div className={mainWindowStyles.items} mainWindowStyles>items:{currentBasketListItems.length}/sum:{basketItemsSum(currentBasketListItems)}$ </div>
                 </nav>
             </header>
             <section className={mainWindowStyles.listItem}>
                 <Routes>
-                    <Route path='/' element={<ListItem listItem={listItem} reTurnItem={reTurnItem} />} />
+                    <Route path='/'
+                        element={
+                            <ListItem
+                                listItem={listItem}
+                                reTurnItem={reTurnItem}
+                                returnBasketListItems={returnBasketListItems}
+                            />
+                        }
+                    />
+
                     <Route path='/about-us' element={<AboutUs />} />
-                    <Route path='/item' element={<Item currentItem={currentItem} />}></Route>
+
+                    <Route path='/item/:id'
+                        element={
+                            <Item currentItem={currentItem}
+                                returnBasketListItems={returnBasketListItems}
+                                increaseCounter={increaseCounter}
+                                decreaseCounter={decreaseCounter}
+                                counter={counter}
+                            />
+                        }
+                    />
+                    <Route path='*' element={<ErrorPage />} />
                 </Routes>
             </section>
         </>
