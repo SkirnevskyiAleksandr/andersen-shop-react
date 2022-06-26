@@ -1,6 +1,7 @@
 import './App.css';
 import { useState, useEffect } from 'react'
 import { MainWindow } from './components/MaineWindow/MainWindow';
+import { LogIn } from './components/LogIn/LogIn';
 
 
 export function App() {
@@ -8,6 +9,7 @@ export function App() {
   const [item, setItem] = useState({});
   const [basketListItems, setBasketItems] = useState([]);
   const [counter, setCounter] = useState(1);
+  const [isLogInOpen, setIsLoginOpen] = useState(false);
 
   const reTurnItem = (item) => {
     setItem(item)
@@ -26,21 +28,22 @@ export function App() {
 
   const increaseCounter = () => {
     setCounter((counter) => {
-      return counter + 1
+      return counter + 1;
     })
   }
 
   const decreaseCounter = () => {
     if (counter > 1) {
       setCounter((counter) => {
-        return counter - 1
+        return counter - 1;
       })
     }
   }
 
   useEffect(() => {
     const fetchData = async () => {
-      const result = await fetch('https://api.escuelajs.co/api/v1/products?offset=0&limit=12').then(res => res.json());
+      const result = await fetch('https://api.escuelajs.co/api/v1/products?offset=0&limit=12')
+        .then(res => res.json());
 
       setListItem(result)
     };
@@ -48,15 +51,25 @@ export function App() {
     fetchData();
   }, [])
 
+  const toggleIsLoginOpen = () => {
+    setIsLoginOpen((isLogInOpen) => {
+      return !isLogInOpen
+    })
+  }
+
   return (
-    <MainWindow listItem={listItem}
-      reTurnItem={reTurnItem}
-      currentItem={item}
-      returnBasketListItems={returnBasketListItems}
-      currentBasketListItems={basketListItems}
-      increaseCounter={increaseCounter}
-      decreaseCounter={decreaseCounter}
-      counter={counter}
-    />
+    <>
+      <MainWindow listItem={listItem}
+        reTurnItem={reTurnItem}
+        currentItem={item}
+        returnBasketListItems={returnBasketListItems}
+        currentBasketListItems={basketListItems}
+        increaseCounter={increaseCounter}
+        decreaseCounter={decreaseCounter}
+        counter={counter}
+        toggleIsLoginOpen={toggleIsLoginOpen}
+      />
+      {isLogInOpen && <LogIn toggleIsLoginOpen={toggleIsLoginOpen} />}
+    </>
   );
 }

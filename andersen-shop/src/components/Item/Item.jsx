@@ -1,8 +1,13 @@
 import React from 'react';
-import basket from '../../assets/add_to_basket.svg'
-import itemStyle from './Item.module.css'
+import basket from '../../assets/add_to_basket.svg';
+import itemStyle from './Item.module.css';
 
-export const Item = ({ currentItem, returnBasketListItems, decreaseCounter, increaseCounter, counter }) => {
+export const Item = (props) => {
+    const { currentItem,
+        returnBasketListItems,
+        decreaseCounter,
+        increaseCounter,
+        counter } = props;
 
     return (
         <div className={itemStyle.mainWrapper}>

@@ -1,11 +1,11 @@
-import React from 'react'
-import mainWindowStyles from './MainWindow.module.css'
-import { ListItem } from '../ListItem/ListItem'
-import { Routes, Route, NavLink } from 'react-router-dom'
-import { AboutUs } from '../About_us/AboutUs'
-import Basket from '../../assets/basket.svg'
-import { Item } from '../Item/Item'
-import { ErrorPage } from '../ErrorPage/ErrorPage'
+import React from 'react';
+import mainWindowStyles from './MainWindow.module.css';
+import { ListItem } from '../ListItem/ListItem';
+import { Routes, Route, NavLink } from 'react-router-dom';
+import { AboutUs } from '../About_us/AboutUs';
+import Basket from '../../assets/basket.svg';
+import { Item } from '../Item/Item';
+import { ErrorPage } from '../ErrorPage/ErrorPage';
 
 
 const basketItemsSum = (arr) => {
@@ -18,7 +18,18 @@ const basketItemsSum = (arr) => {
     return counter;
 };
 
-export const MainWindow = ({ listItem, currentItem, reTurnItem, returnBasketListItems, currentBasketListItems, increaseCounter, decreaseCounter, counter }) => {
+export const MainWindow = (props) => {
+    const { listItem,
+        currentItem,
+        reTurnItem,
+        returnBasketListItems,
+        currentBasketListItems,
+        increaseCounter,
+        decreaseCounter,
+        counter,
+        toggleIsLoginOpen
+    } = props;
+
     return (
         <>
             <header >
@@ -27,8 +38,8 @@ export const MainWindow = ({ listItem, currentItem, reTurnItem, returnBasketList
                     <NavLink to='/'>HOME</NavLink>
                     <NavLink to='/about-us'> ABOUT US</NavLink>
                     <div className={mainWindowStyles.btnWrapper}>
-                        <NavLink to='#' className={`${mainWindowStyles.online_shop_nav} ${mainWindowStyles.btn}`} >Log in</NavLink>
-                        <NavLink to='#' className={`${mainWindowStyles.online_shop_nav} ${mainWindowStyles.btn}`}> Sign up</NavLink>
+                        <button onClick={toggleIsLoginOpen} className={`${mainWindowStyles.online_shop_nav} ${mainWindowStyles.btn}`} >Log in</button>
+                        <button className={`${mainWindowStyles.online_shop_nav} ${mainWindowStyles.btn}`}> Sign up</button>
                     </div>
                     <button className={mainWindowStyles.basketWrapper}>
                         <img src={Basket} alt="basket" />
@@ -47,9 +58,7 @@ export const MainWindow = ({ listItem, currentItem, reTurnItem, returnBasketList
                             />
                         }
                     />
-
                     <Route path='/about-us' element={<AboutUs />} />
-
                     <Route path='/item/:id'
                         element={
                             <Item currentItem={currentItem}
@@ -64,5 +73,5 @@ export const MainWindow = ({ listItem, currentItem, reTurnItem, returnBasketList
                 </Routes>
             </section>
         </>
-    )
+    );
 }
