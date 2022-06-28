@@ -27,10 +27,8 @@ export const ListItem = (props) => {
                   {
                     isLogin ? <button onClick={() => { returnBasketListItems(elem) }} type='button'><img src={basket} alt="add to basket" /></button> :
                       <div> You should Log in to by smth</div>
-
                   }
                 </div>
-
               </div>
             </div>
           )

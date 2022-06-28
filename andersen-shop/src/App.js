@@ -16,12 +16,9 @@ export function App() {
   const [user, setUser] = useState({})
   const [users, setUsers] = useState([]);
   const [logInInputs, setLogInInputs] = useState({});
-  const [userIsExist, setUserIsExist] = useState(true)
-  const [isLogin, setIsLogin] = useState(false)
+  const [userIsExist, setUserIsExist] = useState(true);
+  const [isLogin, setIsLogin] = useState(false);
   const navigate = useNavigate();
-
-
-  console.log(users)
 
   const logInInputsFun = (event) => {
     const name = event.target.name;
@@ -57,13 +54,12 @@ export function App() {
 
       return;
     }
-    console.log(`creatUsersList doshlo`)
+
     createUserList()
   }
 
   const userValidator = (event) => {
     event.preventDefault();
-
     users.some((item) => {
       if (item.username === logInInputs.username && item.password === logInInputs.password) {
         setUserIsExist(true);
@@ -120,14 +116,13 @@ export function App() {
   const toggleIsLoginOpen = () => {
     setIsLoginOpen((isLogInOpen) => {
       setUserIsExist(true)
-
       return !isLogInOpen;
     })
   }
 
   const toggleIsSignUpOpen = () => {
     setIsSignUpOpen((isSignUpOpen) => {
-      return !isSignUpOpen
+      return !isSignUpOpen;
     })
   }
 

@@ -8,7 +8,8 @@ export const Item = (props) => {
         decreaseCounter,
         increaseCounter,
         counter,
-        isLogin } = props;
+        isLogin
+    } = props;
 
     return (
         <div className={itemStyle.mainWrapper}>
