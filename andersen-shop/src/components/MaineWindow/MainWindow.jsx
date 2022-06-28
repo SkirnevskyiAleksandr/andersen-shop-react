@@ -27,7 +27,9 @@ export const MainWindow = (props) => {
         increaseCounter,
         decreaseCounter,
         counter,
-        toggleIsLoginOpen
+        toggleIsLoginOpen,
+        toggleIsSignUpOpen,
+        isLogin
     } = props;
 
     return (
@@ -39,12 +41,16 @@ export const MainWindow = (props) => {
                     <NavLink to='/about-us'> ABOUT US</NavLink>
                     <div className={mainWindowStyles.btnWrapper}>
                         <button onClick={toggleIsLoginOpen} className={`${mainWindowStyles.online_shop_nav} ${mainWindowStyles.btn}`} >Log in</button>
-                        <button className={`${mainWindowStyles.online_shop_nav} ${mainWindowStyles.btn}`}> Sign up</button>
+                        <button onClick={toggleIsSignUpOpen} className={`${mainWindowStyles.online_shop_nav} ${mainWindowStyles.btn}`}>{!isLogin ? 'Sign up' : 'Sign out'}</button>
                     </div>
-                    <button className={mainWindowStyles.basketWrapper}>
-                        <img src={Basket} alt="basket" />
-                    </button>
-                    <div className={mainWindowStyles.items} mainWindowStyles>items:{currentBasketListItems.length}/sum:{basketItemsSum(currentBasketListItems)}$ </div>
+                    {isLogin && (
+                        <div>
+                            <button className={mainWindowStyles.basketWrapper}>
+                                <img src={Basket} alt="basket" />
+                            </button>
+                            <div className={mainWindowStyles.items} mainWindowStyles>items:{currentBasketListItems.length}/sum:{basketItemsSum(currentBasketListItems)}$ </div>
+                        </div>)
+                    }
                 </nav>
             </header>
             <section className={mainWindowStyles.listItem}>

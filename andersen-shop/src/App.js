@@ -1,7 +1,9 @@
 import './App.css';
-import { useState, useEffect } from 'react'
+import { useState, useEffect, } from 'react';
+import { useNavigate, } from 'react-router-dom'
 import { MainWindow } from './components/MaineWindow/MainWindow';
 import { LogIn } from './components/LogIn/LogIn';
+import { SignUp } from './components/SignUp/SignUp';
 
 
 export function App() {
@@ -10,6 +12,70 @@ export function App() {
   const [basketListItems, setBasketItems] = useState([]);
   const [counter, setCounter] = useState(1);
   const [isLogInOpen, setIsLoginOpen] = useState(false);
+  const [isSignUpOpen, setIsSignUpOpen] = useState(false);
+  const [user, setUser] = useState({})
+  const [users, setUsers] = useState([]);
+  const [logInInputs, setLogInInputs] = useState({});
+  const [userIsExist, setUserIsExist] = useState(true)
+  const [isLogin, setIsLogin] = useState(false)
+  const navigate = useNavigate();
+
+
+  console.log(users)
+
+  const logInInputsFun = (event) => {
+    const name = event.target.name;
+    const value = event.target.value;
+
+    setLogInInputs({ ...logInInputs, [name]: value })
+  }
+
+  const createUser = (event) => {
+    const { name, value } = event.target;
+    setUser({ ...user, [name]: value })
+  }
+
+  const createUserList = () => {
+    setUsers([...users, user])
+  }
+
+  const userData = (event) => {
+    event.preventDefault();
+    navigate('/');
+    toggleIsSignUpOpen();
+
+    if (event.target.innerText === 'SIGN OUT') {
+      users.map((elem, index) => {
+        if (elem.username === logInInputs.username && elem.password === logInInputs.password) {
+          setUsers((users) => {
+            users.splice(index, 1)
+            setIsLogin(false)
+            return users;
+          })
+        }
+      })
+
+      return;
+    }
+    console.log(`creatUsersList doshlo`)
+    createUserList()
+  }
+
+  const userValidator = (event) => {
+    event.preventDefault();
+
+    users.some((item) => {
+      if (item.username === logInInputs.username && item.password === logInInputs.password) {
+        setUserIsExist(true);
+        toggleIsLoginOpen();
+        setIsLogin(true);
+
+        return;
+      }
+
+      setUserIsExist(false)
+    })
+  }
 
   const reTurnItem = (item) => {
     setItem(item)
@@ -53,9 +119,18 @@ export function App() {
 
   const toggleIsLoginOpen = () => {
     setIsLoginOpen((isLogInOpen) => {
-      return !isLogInOpen
+      setUserIsExist(true)
+
+      return !isLogInOpen;
     })
   }
+
+  const toggleIsSignUpOpen = () => {
+    setIsSignUpOpen((isSignUpOpen) => {
+      return !isSignUpOpen
+    })
+  }
+
 
   return (
     <>
@@ -68,8 +143,26 @@ export function App() {
         decreaseCounter={decreaseCounter}
         counter={counter}
         toggleIsLoginOpen={toggleIsLoginOpen}
+        toggleIsSignUpOpen={toggleIsSignUpOpen}
+        isLogin={isLogin}
       />
-      {isLogInOpen && <LogIn toggleIsLoginOpen={toggleIsLoginOpen} />}
+      {isLogInOpen &&
+        <LogIn toggleIsLoginOpen={toggleIsLoginOpen}
+          userValidator={userValidator}
+          logInInputsFun={logInInputsFun}
+          logInInputs={logInInputs}
+          userIsExist={userIsExist}
+        />
+      }
+      {isSignUpOpen &&
+        <SignUp toggleIsSignUpOpen={toggleIsSignUpOpen}
+          userData={userData}
+          createUser={createUser}
+          user={user}
+          isLogin={isLogin}
+        />
+      }
+
     </>
   );
 }

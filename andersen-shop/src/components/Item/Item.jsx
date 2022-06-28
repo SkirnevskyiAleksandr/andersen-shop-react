@@ -1,6 +1,8 @@
 import React from 'react';
 import basket from '../../assets/add_to_basket.svg';
 import itemStyle from './Item.module.css';
+import { useNavigate } from 'react-router-dom';
+
 
 export const Item = (props) => {
     const { currentItem,
