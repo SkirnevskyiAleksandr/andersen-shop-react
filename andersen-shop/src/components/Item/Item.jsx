@@ -1,15 +1,14 @@
 import React from 'react';
 import basket from '../../assets/add_to_basket.svg';
 import itemStyle from './Item.module.css';
-import { useNavigate } from 'react-router-dom';
-
 
 export const Item = (props) => {
     const { currentItem,
         returnBasketListItems,
         decreaseCounter,
         increaseCounter,
-        counter } = props;
+        counter,
+        isLogin } = props;
 
     return (
         <div className={itemStyle.mainWrapper}>
@@ -26,7 +25,8 @@ export const Item = (props) => {
                             <button onClick={decreaseCounter}>&lt;</button>{counter}
                             <button onClick={increaseCounter}>&gt;</button>
                         </div>
-                        <button onClick={() => { returnBasketListItems(currentItem, counter) }} type='button'><img src={basket} alt="add to basket" /></button>
+                        {(isLogin ? <button onClick={() => { returnBasketListItems(currentItem, counter) }} type='button'><img src={basket} alt="add to basket" /></button> :
+                            <div>To by smth you should Log in</div>)}
                     </div>
                 </div>
             </div>

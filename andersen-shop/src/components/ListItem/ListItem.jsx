@@ -7,7 +7,8 @@ export const ListItem = (props) => {
   const {
     listItem,
     reTurnItem,
-    returnBasketListItems
+    returnBasketListItems,
+    isLogin
   } = props;
 
   return (
@@ -23,7 +24,11 @@ export const ListItem = (props) => {
                   <div>
                     <span> price:</span> <span className={listItemStyle.price}>{elem.price} $</span>
                   </div>
-                  <button onClick={() => { returnBasketListItems(elem) }} type='button'><img src={basket} alt="add to basket" /></button>
+                  {
+                    isLogin ? <button onClick={() => { returnBasketListItems(elem) }} type='button'><img src={basket} alt="add to basket" /></button> :
+                      <div> You should Log in to by smth</div>
+
+                  }
                 </div>
 
               </div>

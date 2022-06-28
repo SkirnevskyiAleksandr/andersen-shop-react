@@ -43,13 +43,14 @@ export const MainWindow = (props) => {
                         <button onClick={toggleIsLoginOpen} className={`${mainWindowStyles.online_shop_nav} ${mainWindowStyles.btn}`} >Log in</button>
                         <button onClick={toggleIsSignUpOpen} className={`${mainWindowStyles.online_shop_nav} ${mainWindowStyles.btn}`}>{!isLogin ? 'Sign up' : 'Sign out'}</button>
                     </div>
-                    {isLogin && (
+                    {isLogin ? (
                         <div>
                             <button className={mainWindowStyles.basketWrapper}>
                                 <img src={Basket} alt="basket" />
                             </button>
                             <div className={mainWindowStyles.items} mainWindowStyles>items:{currentBasketListItems.length}/sum:{basketItemsSum(currentBasketListItems)}$ </div>
-                        </div>)
+                        </div>) : (
+                        <div className={mainWindowStyles.shouldBy}>To by smth you should Log in</div>)
                     }
                 </nav>
             </header>
@@ -61,6 +62,7 @@ export const MainWindow = (props) => {
                                 listItem={listItem}
                                 reTurnItem={reTurnItem}
                                 returnBasketListItems={returnBasketListItems}
+                                isLogin={isLogin}
                             />
                         }
                     />
@@ -72,6 +74,7 @@ export const MainWindow = (props) => {
                                 increaseCounter={increaseCounter}
                                 decreaseCounter={decreaseCounter}
                                 counter={counter}
+                                isLogin={isLogin}
                             />
                         }
                     />
